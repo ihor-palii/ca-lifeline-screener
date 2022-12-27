@@ -45,6 +45,10 @@
   background: #ec813a;
 }
 
+.step-skipped > .line-before {
+  background: #ec813a;
+}
+
 .selected-step-container {
   display: flex;
   flex-direction: row;
@@ -55,6 +59,12 @@
 
 .inner-container {
   max-width: 960px !important;
+}
+
+.inner-container > .households {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
 }
 
 .title {

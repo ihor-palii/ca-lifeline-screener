@@ -8,7 +8,7 @@
         Let's Start
       </div>
     </div>
-    <div class="step-selector" [ngClass]="{'step-active': true}">
+    <div class="step-selector" [ngClass]="{'step-active': steps.household === StepState.Active}">
       <div class="line-before"></div>
       <div class="icon">
         <fa-icon [icon]="icons.faPeopleGroup" size="2x"></fa-icon>
@@ -17,7 +17,7 @@
         Households Benefits
       </div>
     </div>
-    <div class="step-selector">
+    <div class="step-selector" [ngClass]="{'step-active': steps.programs === StepState.Active, 'step-skipped': steps.programs === StepState.Skipped}">
       <div class="line-before"></div>
       <div class="icon">
         <fa-icon [icon]="icons.faBuildingColumns" size="2x"></fa-icon>
@@ -26,7 +26,7 @@
         Programs
       </div>
     </div>
-    <div class="step-selector">
+    <div class="step-selector" [ngClass]="{'step-active': steps.income === StepState.Active, 'step-skipped': steps.income === StepState.Skipped}">
       <div class="line-before"></div>
       <div class="icon">
         <fa-icon [icon]="icons.faCoins" size="2x"></fa-icon>
@@ -35,7 +35,7 @@
         Income
       </div>
     </div>
-    <div class="step-selector">
+    <div class="step-selector" [ngClass]="{'step-active': steps.result === StepState.Active}">
       <div class="line-before"></div>
       <div class="icon">
         <fa-icon [icon]="icons.faCheck" size="2x"></fa-icon>
@@ -47,29 +47,53 @@
   </div>
   <div class="selected-step-container">
     <div class="inner-container">
-      <div class="info-tab">
-        <div><h3 class="mb-1 text-blue bold">Important information for California LifeLine subscribers who have received a
-          text message or automated call from California LifeLine saying that no action is required to complete the annual
+      <div class="info-tab" *ngIf="currentStep === Steps.Information">
+        <div><h3 class="mb-1 text-blue bold">Important information for California LifeLine subscribers who have received
+          a
+          text message or automated call from California LifeLine saying that no action is required to complete the
+          annual
           LifeLine benefit renewal process.</h3> California LifeLine subscribers must annually renew their LifeLine
           benefit. <br><br> If you received a text message or an automated phone call informing you that California
           LifeLine has enough information to process the renewal of your LifeLine benefit, then your annual renewal
           process is complete. and no further actions are required of you. <h4 class="mt-4 mb-1 text-blue bold">How did
-            the California LifeLine Program Administrator obtain information to complete my renewal process?</h4> 105 days
-          before a subscriber’s California LifeLine anniversary date, the California LifeLine Program Administrator checks
+            the California LifeLine Program Administrator obtain information to complete my renewal process?</h4> 105
+          days
+          before a subscriber’s California LifeLine anniversary date, the California LifeLine Program Administrator
+          checks
           the available eligibility databases. When the subscriber’s information matches in an eligibility database, and
           the Program Administrator does not require any additional information from the subscriber to renew the
           subscriber’s LifeLine benefit, then the Program Administrator sends a text or makes an automated phone call to
           the subscriber to inform the subscriber that the Program Administrator has enough information to complete the
-          annual renewal of the subscriber’s California LifeLine benefit. <br><br> When a subscriber’s renewal process is
+          annual renewal of the subscriber’s California LifeLine benefit. <br><br> When a subscriber’s renewal process
+          is
           completed this way, the subscriber will not receive a renewal form in the mail because the annual renewal
-          process is complete. The subscriber will be mailed official notification of the LifeLine renewal decision on the
+          process is complete. The subscriber will be mailed official notification of the LifeLine renewal decision on
+          the
           subscriber’s anniversary date. <br><br> If you have additional questions, you may call us at <strong>877-858-7463</strong>
           or you can chat with us by clicking <a langhref="contact" href="en/contact">https://www.californialifeline.com/en/contact</a>
           and then click the CHAT button. Our hours of operation are Monday through Friday, 7AM to 7PM Pacific Time. <h4
             class="mt-4 mb-1 text-blue bold">General Notes and Tips</h4> It is important that California LifeLine
           participants keep their service and billing (mailing) addresses updated with their California LifeLine service
           providers, so they receive all mailings from California LifeLine. <br><br></div>
+        <app-button (click)="goToHouseholdsStep()">Begin</app-button>
       </div>
+      <div class="households" *ngIf="currentStep === Steps.HouseholdBenefits">
+        How many members are living in your household?
+        <mat-form-field appearance="outline">
+          <input matInput type="number" placeholder="Placeholder" [(ngModel)]="fields.householdMembersCount" min="1">
+        </mat-form-field>
+
+        Does anybody in your household is receiving lifeline benefit already?
+        <mat-radio-group [(ngModel)]="fields.householdMembersBenefit">
+          <mat-radio-button [value]="true">Yes</mat-radio-button>
+          <mat-radio-button [value]="false">No</mat-radio-button>
+        </mat-radio-group>
+
+        <app-button (click)="goToProgramsStep()">Next</app-button>
+      </div>
+      <div class="programs" *ngIf="currentStep === Steps.GovPrograms"></div>
+      <div class="income" *ngIf="currentStep === Steps.PersonalIncome"></div>
+      <div class="result" *ngIf="currentStep === Steps.Result"></div>
     </div>
   </div>
 </div>

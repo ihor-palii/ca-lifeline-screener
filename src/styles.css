@@ -2,3 +2,21 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+:root {
+  --mdc-theme-primary: #152541;
+  --mdc-theme-secondary: #ec813a;
+  --mdc-radio-selected-icon-color: #ec813a;
+  --mdc-radio-selected-focus-icon-color:#ec813a;
+  --mdc-radio-selected-hover-icon-color:#ec813a;
+  --mdc-radio-selected-pressed-icon-color:#ec813a;
+  --mat-mdc-radio-checked-ripple-color: #ec813a
+}
+
+.mat-mdc-radio-button.mat-accent {
+  --mdc-radio-selected-icon-color: #ec813a;
+  --mdc-radio-selected-focus-icon-color:#ec813a;
+  --mdc-radio-selected-hover-icon-color:#ec813a;
+  --mdc-radio-selected-pressed-icon-color:#ec813a;
+  --mat-mdc-radio-checked-ripple-color: #ec813a
+}

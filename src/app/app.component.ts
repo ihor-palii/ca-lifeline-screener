@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { faBookOpen, faBuildingColumns, faCheck, faCoins, faPeopleGroup } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,5 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'gnp-ca-screener';
+  icons = {faBookOpen, faBuildingColumns, faCheck, faCoins, faPeopleGroup }
 }

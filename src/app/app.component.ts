@@ -26,7 +26,6 @@ export class AppComponent {
   StepState = StepState;
 
   // component variables
-  icons = {faBookOpen, faBuildingColumns, faCheck, faCoins, faPeopleGroup};
   currentStep = Steps.Information;
   steps = {
     household: StepState.Disabled,
@@ -39,8 +38,13 @@ export class AppComponent {
     householdMembersBenefit: false,
     selectedFederalPrograms: [],
     selectedStatePrograms: [],
+    incomePeriod: undefined,
+    incomeRate: 0,
     eligible: false,
   }
+
+  // additional variables for styles and calculation
+  icons = {faBookOpen, faBuildingColumns, faCheck, faCoins, faPeopleGroup};
   programsList = {
     federal: [
       "SNAP",
@@ -74,9 +78,10 @@ export class AppComponent {
 
   // todo: remove debug changes
   ngOnInit() {
-    // this.currentStep = Steps.GovPrograms;
-    // this.steps.household = StepState.Skipped;
-    // this.steps.programs = StepState.Active;
+    this.currentStep = Steps.PersonalIncome;
+    this.steps.household = StepState.Skipped;
+    this.steps.programs = StepState.Skipped;
+    this.steps.income = StepState.Active;
   }
 
   goToStep(step: Steps) {
@@ -113,6 +118,10 @@ export class AppComponent {
     }
   }
 
+  goToResultStep() {
+
+  }
+
   resetSteps() {
     this.currentStep = Steps.Information;
     this.steps = {
@@ -121,11 +130,13 @@ export class AppComponent {
       income: StepState.Disabled,
       result: StepState.Disabled,
     };
-     this.fields = {
+    this.fields = {
       householdMembersCount: 1,
       householdMembersBenefit: false,
       selectedFederalPrograms: [],
       selectedStatePrograms: [],
+      incomePeriod: undefined,
+      incomeRate: 0,
       eligible: false,
     };
   }

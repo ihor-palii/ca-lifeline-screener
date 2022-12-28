@@ -79,10 +79,11 @@
           providers, so they receive all mailings from California LifeLine. <br><br></div>
         <app-button (click)="goToHouseholdsStep()">Check</app-button>
       </div>
+
       <div class="households" *ngIf="currentStep === Steps.HouseholdBenefits">
-        How many members are living in your household?
+        How many people (including all children/dependents) are living in your household?
         <mat-form-field appearance="outline">
-          <input matInput type="number" placeholder="Placeholder" [(ngModel)]="fields.householdMembersCount" min="1">
+          <input matInput type="number" [(ngModel)]="fields.householdMembersCount" min="1">
         </mat-form-field>
 
         Does anybody in your household is receiving lifeline benefit already?
@@ -94,6 +95,7 @@
         <br>
         <app-button (click)="goToProgramsStep()">Next</app-button>
       </div>
+
       <div class="programs" *ngIf="currentStep === Steps.GovPrograms">
         <span>
           Select the ones, from the list of Federal or State program, that you are taking part in.
@@ -108,7 +110,8 @@
             </mat-expansion-panel-header>
 
             <mat-selection-list class="overflow-y-400" [(ngModel)]="fields.selectedFederalPrograms">
-              <mat-list-option *ngFor="let program of programsList.federal" [value]="program">{{ program }}</mat-list-option>
+              <mat-list-option *ngFor="let program of programsList.federal"
+                               [value]="program">{{ program }}</mat-list-option>
             </mat-selection-list>
           </mat-expansion-panel>
           <mat-expansion-panel>
@@ -119,16 +122,34 @@
             </mat-expansion-panel-header>
 
             <mat-selection-list class="overflow-y-400" [(ngModel)]="fields.selectedStatePrograms">
-              <mat-list-option *ngFor="let program of programsList.state" [value]="program">{{ program }}</mat-list-option>
+              <mat-list-option *ngFor="let program of programsList.state"
+                               [value]="program">{{ program }}</mat-list-option>
             </mat-selection-list>
           </mat-expansion-panel>
         </mat-accordion>
 
         <app-button (click)="goToIncomeStep()">Next</app-button>
       </div>
-      <div class="income" *ngIf="currentStep === Steps.PersonalIncome">
 
+      <div class="income" *ngIf="currentStep === Steps.PersonalIncome">
+        What is your gross yearly income?
+        <mat-form-field appearance="outline">
+          <input matInput type="number" value="1" min="0" [(ngModel)]="fields.incomeRate">
+        </mat-form-field>
+
+        What is your payment period?
+        <mat-form-field appearance="outline">
+          <mat-select [(ngModel)]="fields.incomePeriod">
+            <mat-option>--</mat-option>
+            <mat-option [value]="1">Once a month - x12</mat-option>
+            <mat-option [value]="2">Once a fortnight - x26</mat-option>
+            <mat-option [value]="4">Once a week - x52</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <app-button (click)="goToResultStep()">Next</app-button>
       </div>
+
       <div class="result" *ngIf="currentStep === Steps.Result">
         <div *ngIf="!fields.eligible">
           You are not eligible for subsidized phone/broadband service.

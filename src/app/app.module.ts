@@ -11,6 +11,9 @@ import {MatIconModule} from "@angular/material/icon";
 import {MatInputModule} from "@angular/material/input";
 import {FormsModule} from "@angular/forms";
 import {MatRadioModule} from "@angular/material/radio";
+import {MatCheckboxModule} from "@angular/material/checkbox";
+import {MatExpansionModule} from "@angular/material/expansion";
+import {MatListModule} from "@angular/material/list";
 
 @NgModule({
   declarations: [
@@ -26,7 +29,10 @@ import {MatRadioModule} from "@angular/material/radio";
     MatIconModule,
     MatInputModule,
     FormsModule,
-    MatRadioModule
+    MatRadioModule,
+    MatCheckboxModule,
+    MatExpansionModule,
+    MatListModule
   ],
   providers: [],
   bootstrap: [AppComponent]

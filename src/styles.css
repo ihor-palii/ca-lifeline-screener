@@ -20,3 +20,10 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   --mdc-radio-selected-pressed-icon-color:#ec813a;
   --mat-mdc-radio-checked-ripple-color: #ec813a
 }
+
+.mat-mdc-list-option.mat-accent, .mat-mdc-list-option, .mdc-checkbox {
+  --mdc-checkbox-selected-focus-icon-color: #ec813a !important;
+  --mdc-checkbox-selected-hover-icon-color: #ec813a !important;
+  --mdc-checkbox-selected-icon-color: #ec813a !important;
+  --mdc-checkbox-selected-pressed-icon-color: #ec813a !important;
+}

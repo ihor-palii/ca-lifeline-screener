@@ -17,7 +17,8 @@
         Households Benefits
       </div>
     </div>
-    <div class="step-selector" [ngClass]="{'step-active': steps.programs === StepState.Active, 'step-skipped': steps.programs === StepState.Skipped}">
+    <div class="step-selector"
+         [ngClass]="{'step-active': steps.programs === StepState.Active, 'step-skipped': steps.programs === StepState.Skipped}">
       <div class="line-before"></div>
       <div class="icon">
         <fa-icon [icon]="icons.faBuildingColumns" size="2x"></fa-icon>
@@ -26,7 +27,8 @@
         Programs
       </div>
     </div>
-    <div class="step-selector" [ngClass]="{'step-active': steps.income === StepState.Active, 'step-skipped': steps.income === StepState.Skipped}">
+    <div class="step-selector"
+         [ngClass]="{'step-active': steps.income === StepState.Active, 'step-skipped': steps.income === StepState.Skipped}">
       <div class="line-before"></div>
       <div class="icon">
         <fa-icon [icon]="icons.faCoins" size="2x"></fa-icon>
@@ -75,7 +77,7 @@
             class="mt-4 mb-1 text-blue bold">General Notes and Tips</h4> It is important that California LifeLine
           participants keep their service and billing (mailing) addresses updated with their California LifeLine service
           providers, so they receive all mailings from California LifeLine. <br><br></div>
-        <app-button (click)="goToHouseholdsStep()">Begin</app-button>
+        <app-button (click)="goToHouseholdsStep()">Check</app-button>
       </div>
       <div class="households" *ngIf="currentStep === Steps.HouseholdBenefits">
         How many members are living in your household?
@@ -89,11 +91,54 @@
           <mat-radio-button [value]="false">No</mat-radio-button>
         </mat-radio-group>
 
+        <br>
         <app-button (click)="goToProgramsStep()">Next</app-button>
       </div>
-      <div class="programs" *ngIf="currentStep === Steps.GovPrograms"></div>
-      <div class="income" *ngIf="currentStep === Steps.PersonalIncome"></div>
-      <div class="result" *ngIf="currentStep === Steps.Result"></div>
+      <div class="programs" *ngIf="currentStep === Steps.GovPrograms">
+        <span>
+          Select the ones, from the list of Federal or State program, that you are taking part in.
+        </span>
+
+        <mat-accordion>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Federal Programs
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <mat-selection-list class="overflow-y-400" [(ngModel)]="fields.selectedFederalPrograms">
+              <mat-list-option *ngFor="let program of programsList.federal" [value]="program">{{ program }}</mat-list-option>
+            </mat-selection-list>
+          </mat-expansion-panel>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                State Programs
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <mat-selection-list class="overflow-y-400" [(ngModel)]="fields.selectedStatePrograms">
+              <mat-list-option *ngFor="let program of programsList.state" [value]="program">{{ program }}</mat-list-option>
+            </mat-selection-list>
+          </mat-expansion-panel>
+        </mat-accordion>
+
+        <app-button (click)="goToIncomeStep()">Next</app-button>
+      </div>
+      <div class="income" *ngIf="currentStep === Steps.PersonalIncome">
+
+      </div>
+      <div class="result" *ngIf="currentStep === Steps.Result">
+        <div *ngIf="!fields.eligible">
+          You are not eligible for subsidized phone/broadband service.
+        </div>
+        <div *ngIf="fields.eligible">
+          You are likely eligible for subsidized phone/broadband service.
+        </div>
+        <br>
+        <app-button (click)="resetSteps()">Reset</app-button>
+      </div>
     </div>
   </div>
 </div>

@@ -132,7 +132,7 @@
       </div>
 
       <div class="income" *ngIf="currentStep === Steps.PersonalIncome">
-        What is your gross yearly income?
+        What is your gross yearly income ($)?
         <mat-form-field appearance="outline">
           <input matInput type="number" value="1" min="0" [(ngModel)]="fields.incomeRate">
         </mat-form-field>
@@ -140,10 +140,9 @@
         What is your payment period?
         <mat-form-field appearance="outline">
           <mat-select [(ngModel)]="fields.incomePeriod">
-            <mat-option>--</mat-option>
-            <mat-option [value]="1">Once a month - x12</mat-option>
-            <mat-option [value]="2">Once a fortnight - x26</mat-option>
-            <mat-option [value]="4">Once a week - x52</mat-option>
+            <mat-option [value]="2">Once a month - x12</mat-option>
+            <mat-option [value]="1">Once a fortnight - x26</mat-option>
+            <mat-option [value]="0">Once a week - x52</mat-option>
           </mat-select>
         </mat-form-field>
 

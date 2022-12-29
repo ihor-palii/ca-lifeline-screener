@@ -38,8 +38,8 @@ export class AppComponent {
     householdMembersBenefit: false,
     selectedFederalPrograms: [],
     selectedStatePrograms: [],
-    incomePeriod: undefined,
-    incomeRate: 0,
+    incomePeriod: 2,
+    incomeRate: 27000,
     eligible: false,
   }
 
@@ -75,13 +75,26 @@ export class AppComponent {
       "Federal Veterans and Survivors Pension Benefit Program",
     ],
   }
-
-  // todo: remove debug changes
-  ngOnInit() {
-    this.currentStep = Steps.PersonalIncome;
-    this.steps.household = StepState.Skipped;
-    this.steps.programs = StepState.Skipped;
-    this.steps.income = StepState.Active;
+  incomeList = {
+    state: new Map([
+      [1, 28700],
+      [2, 28700],
+      [3, 33300],
+      [4, 40600],
+      [5, 47900],
+      [6, 55200],
+      [7, 62500],
+      [8, 69800],
+      [9, 77100],
+      [10, 84400],
+    ]),
+    federal: new Map([
+      [0, [9440, 10860, 11800]],
+      [1, [27180, 31260, 33980]],
+      [2, [36620, 42120, 45780]],
+      [3, [46060, 52980, 57580]],
+      [4, [55500, 63840, 69380]],
+    ]),
   }
 
   goToStep(step: Steps) {
@@ -119,7 +132,40 @@ export class AppComponent {
   }
 
   goToResultStep() {
+    let stateIncomeLimit = this.incomeList.state.get(this.fields.householdMembersCount);
+    if (stateIncomeLimit) {
+      if (this.fields.incomeRate < stateIncomeLimit) {
+        this.fields.eligible = true;
+        this.currentStep = Steps.Result;
+        this.steps.result = StepState.Active;
+        return
+      }
+    }
 
+    let federalIncomeLimit = 0;
+    if (this.fields.householdMembersCount > 4) {
+      let period = this.fields.incomePeriod;
+      let extraMembers = this.fields.householdMembersCount - 4;
+      let maxFederalIncomeLimits = this.incomeList.federal.get(4);
+      let increaseFederalIncomeLimits = this.incomeList.federal.get(0);
+      if (increaseFederalIncomeLimits && maxFederalIncomeLimits) {
+        federalIncomeLimit = maxFederalIncomeLimits[period] + (increaseFederalIncomeLimits[period] * extraMembers);
+      }
+    } else {
+      let federalIncomeLimits = this.incomeList.federal.get(this.fields.householdMembersCount);
+      if (federalIncomeLimits) {
+        federalIncomeLimit = federalIncomeLimits[0];
+      }
+    }
+    if (this.fields.incomeRate < federalIncomeLimit) {
+      this.fields.eligible = true;
+      this.currentStep = Steps.Result;
+      this.steps.result = StepState.Active;
+      return
+    }
+
+    this.fields.eligible = false;
+    this.currentStep = Steps.Result;
   }
 
   resetSteps() {
@@ -135,8 +181,8 @@ export class AppComponent {
       householdMembersBenefit: false,
       selectedFederalPrograms: [],
       selectedStatePrograms: [],
-      incomePeriod: undefined,
-      incomeRate: 0,
+      incomePeriod: 2,
+      incomeRate: 27000,
       eligible: false,
     };
   }
